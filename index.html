@@ -37,6 +37,12 @@
       flex-direction: column;
       align-items: flex-start;
       gap: 10px;
+      width: 100%;
+    }
+    .input-actions {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
     }
     button {
       padding: 10px 20px;
@@ -62,7 +68,6 @@
       font-size: 18px;
       border: none;
       cursor: pointer;
-      align-self: flex-end;
     }
     .clear-button:hover {
       background-color: #cc0000;
@@ -74,6 +79,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
       background-color: #fff;
+      width: 100%;
     }
     .translation p {
       margin: 10px 0;
@@ -85,7 +91,8 @@
       vertical-align: middle;
     }
     #copyButton {
-      margin-top: 20px;
+      margin-top: 10px;
+      align-self: flex-start;
     }
   </style>
 </head>
@@ -94,7 +101,7 @@
     <h1>Swengerb</h1>
     <div class="input-group">
       <textarea id="inputText" placeholder="Enter text here..."></textarea>
-      <div style="display: flex; justify-content: space-between; width: 100%;">
+      <div class="input-actions">
         <button onclick="translateText()">Translate</button>
         <button class="clear-button" onclick="clearInput()">🗑️</button>
       </div>
