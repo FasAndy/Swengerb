@@ -34,8 +34,9 @@
     }
     .input-group {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
     }
     button {
       padding: 10px 20px;
@@ -61,6 +62,7 @@
       font-size: 18px;
       border: none;
       cursor: pointer;
+      align-self: flex-end;
     }
     .clear-button:hover {
       background-color: #cc0000;
@@ -92,9 +94,11 @@
     <h1>Swengerb</h1>
     <div class="input-group">
       <textarea id="inputText" placeholder="Enter text here..."></textarea>
-      <button class="clear-button" onclick="clearInput()">🗑️</button>
+      <div style="display: flex; justify-content: space-between; width: 100%;">
+        <button onclick="translateText()">Translate</button>
+        <button class="clear-button" onclick="clearInput()">🗑️</button>
+      </div>
     </div>
-    <button onclick="translateText()">Translate</button>
     <div class="translation" id="output"></div>
     <button id="copyButton" onclick="copyToClipboard()">Copy</button>
   </div>
