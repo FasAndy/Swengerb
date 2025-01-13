@@ -23,7 +23,7 @@
       text-align: center;
     }
     textarea {
-      width: calc(100% - 50px);
+      width: 100%;
       height: 100px;
       margin: 10px 0;
       padding: 10px;
@@ -171,17 +171,14 @@
     function copyToClipboard() {
       const output = document.getElementById('output').innerHTML;
       if (!output.trim()) {
-        alert('Nothing to copy!');
         return;
       }
 
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = output;
-      const textToCopy = tempDiv.textContent || tempDiv.innerText;
+      const textToCopy = tempDiv.textContent.replace(/\s+🇷🇸/g, '🇷🇸').replace(/\s+🇸🇪/g, '🇸🇪').replace(/\s+🇦🇹/g, '🇦🇹').replace(/\s+🇺🇸/g, '🇺🇸');
 
-      navigator.clipboard.writeText(textToCopy).then(() => {
-        alert('Copied to clipboard!');
-      }).catch(err => {
+      navigator.clipboard.writeText(textToCopy).catch(err => {
         console.error('Failed to copy text: ', err);
       });
     }
