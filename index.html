@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multilang Translator</title>
+  <title>LibreTranslate Example</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -65,7 +65,7 @@
 </head>
 <body>
   <div class="container">
-    <h1>Multilang Translator</h1>
+    <h1>LibreTranslate Example</h1>
     <textarea id="inputText" placeholder="Enter text here..."></textarea>
     <button onclick="translateText()">Translate</button>
     <div class="translation" id="output"></div>
@@ -76,8 +76,8 @@
     const flags = {
       'serbian': 'https://flagcdn.com/w40/rs.png',
       'swedish': 'https://flagcdn.com/w40/se.png',
-      'austrian': 'https://flagcdn.com/w40/at.png',
-      'english': 'https://flagcdn.com/w40/us.png'
+      'german': 'https://flagcdn.com/w40/de.png',
+      'english': 'https://flagcdn.com/w40/gb.png'
     };
 
     async function translateText() {
@@ -95,8 +95,8 @@
         output.innerHTML = `
           <p><img src="${flags.serbian}" alt="Serbian Flag"> <strong>Serbian:</strong> ${translations.serbian}</p>
           <p><img src="${flags.swedish}" alt="Swedish Flag"> <strong>Swedish:</strong> ${translations.swedish}</p>
-          <p><img src="${flags.austrian}" alt="Austrian Flag"> <strong>German (Austrian):</strong> ${translations.german}</p>
-          <p><img src="${flags.english}" alt="US Flag"> <strong>English:</strong> ${translations.english}</p>
+          <p><img src="${flags.german}" alt="German Flag"> <strong>German:</strong> ${translations.german}</p>
+          <p><img src="${flags.english}" alt="English Flag"> <strong>English:</strong> ${translations.english}</p>
         `;
       } catch (error) {
         output.innerHTML = '<p>Error translating text. Please try again later.</p>';
@@ -105,8 +105,7 @@
     }
 
     async function fetchTranslations(text) {
-      const apiKey = 'YOUR_GOOGLE_TRANSLATE_API_KEY'; // Replace with your actual API key
-      const url = `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`;
+      const url = 'https://libretranslate.com/translate';
 
       const languages = {
         serbian: 'sr',
@@ -119,10 +118,15 @@
         const res = await fetch(url, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ q: text, target: languages[key] })
+          body: JSON.stringify({
+            q: text,
+            source: 'auto', // Detect language automatically
+            target: languages[key],
+            format: 'text'
+          })
         });
         const data = await res.json();
-        return { [key]: data.data.translations[0].translatedText };
+        return { [key]: data.translatedText };
       });
 
       const results = await Promise.all(promises);
