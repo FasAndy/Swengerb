@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LibreTranslate Example</title>
+  <title>Swengerb</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -61,23 +61,26 @@
       margin-right: 10px;
       vertical-align: middle;
     }
+    #copyButton {
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>LibreTranslate Example</h1>
+    <h1>Swengerb</h1>
     <textarea id="inputText" placeholder="Enter text here..."></textarea>
     <button onclick="translateText()">Translate</button>
     <div class="translation" id="output"></div>
-    <button onclick="copyToClipboard()">Copy</button>
+    <button id="copyButton" onclick="copyToClipboard()">Copy</button>
   </div>
 
   <script>
     const flags = {
-      'serbian': 'https://flagcdn.com/w40/rs.png',
-      'swedish': 'https://flagcdn.com/w40/se.png',
-      'german': 'https://flagcdn.com/w40/de.png',
-      'english': 'https://flagcdn.com/w40/gb.png'
+      'serbian': '🇷🇸',
+      'swedish': '🇸🇪',
+      'german': '🇦🇹',
+      'english': '🇺🇸'
     };
 
     async function translateText() {
@@ -93,10 +96,10 @@
       try {
         const translations = await fetchTranslations(input);
         output.innerHTML = `
-          <p><img src="${flags.serbian}" alt="Serbian Flag"> <strong>Serbian:</strong> ${translations.serbian}</p>
-          <p><img src="${flags.swedish}" alt="Swedish Flag"> <strong>Swedish:</strong> ${translations.swedish}</p>
-          <p><img src="${flags.german}" alt="German Flag"> <strong>German:</strong> ${translations.german}</p>
-          <p><img src="${flags.english}" alt="English Flag"> <strong>English:</strong> ${translations.english}</p>
+          <p>${flags.serbian} <strong>Serbian:</strong> ${translations.serbian}</p>
+          <p>${flags.swedish} <strong>Swedish:</strong> ${translations.swedish}</p>
+          <p>${flags.german} <strong>German (Austrian):</strong> ${translations.german}</p>
+          <p>${flags.english} <strong>English:</strong> ${translations.english}</p>
         `;
       } catch (error) {
         output.innerHTML = '<p>Error translating text. Please try again later.</p>';
@@ -134,13 +137,17 @@
     }
 
     function copyToClipboard() {
-      const output = document.getElementById('output').innerText;
+      const output = document.getElementById('output').innerHTML;
       if (!output.trim()) {
         alert('Nothing to copy!');
         return;
       }
 
-      navigator.clipboard.writeText(output).then(() => {
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = output;
+      const textToCopy = tempDiv.textContent || tempDiv.innerText;
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
         alert('Copied to clipboard!');
       }).catch(err => {
         console.error('Failed to copy text: ', err);
